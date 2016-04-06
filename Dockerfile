@@ -2,25 +2,13 @@
 FROM debian:jessie
 ENV HOSTNAME osc
 
-#还需要添加osc.builder.pub.key
 #安装docker 镜像环境
-#还需要添加emdebian的unstable源安装apt-get install emdebian-archive-keyring=2.0.5
-    #&& echo 'deb http://10.171.69.128/emdebian/ unstable main' >> /etc/apt/sources.list \
-    #&& echo 'deb-src http://10.171.69.128/emdebian/ unstable main' >> /etc/apt/sources.list \
-RUN echo 'deb http://10.171.69.128/debian/ jessie main non-free contrib' > /etc/apt/sources.list \
-    && echo 'deb http://10.171.69.128/debian/ jessie-updates main non-free contrib' >> /etc/apt/sources.list \
-    && echo 'deb-src http://10.171.69.128/debian/ jessie main non-free contrib' >> /etc/apt/sources.list \
-    && echo 'deb http://10.171.69.128/debian-security/ jessie/updates main' >> /etc/apt/sources.list \
-    && echo 'deb-src http://10.171.69.128/debian/ jessie-updates main non-free contrib' >> /etc/apt/sources.list \
-    && echo 'deb-src http://10.171.69.128/debian-security/ jessie/updates main' >> /etc/apt/sources.list \
-    && echo 'deb http://10.171.69.128/nass/ jessie main' >> /etc/apt/sources.list \
-    && echo 'deb-src http://10.171.69.128/nass/ jessie main' >> /etc/apt/sources.list \
-    && echo 'deb http://10.171.69.128/nass/ unstable main' >> /etc/apt/sources.list \
-    && echo 'deb-src http://10.171.69.128/nass/ unstable main' >> /etc/apt/sources.list \
-    && echo 'deb http://10.171.69.128/nass/ release main' >> /etc/apt/sources.list \
-    && echo 'deb-src http://10.171.69.128/nass/ release main' >> /etc/apt/sources.list \
-    && echo 'deb http://10.171.69.128/emdebian/ jessie main' >> /etc/apt/sources.list \
-    && echo 'deb-src http://10.171.69.128/emdebian/ jessie main' >> /etc/apt/sources.list \
+RUN echo 'deb http://ftp.cn.debian.org/debian/ jessie main non-free contrib' > /etc/apt/sources.list \
+    && echo 'deb http://ftp.cn.debian.org/debian/ jessie-updates main non-free contrib' >> /etc/apt/sources.list \
+    && echo 'deb-src http://ftp.cn.debian.org/debian/ jessie main non-free contrib' >> /etc/apt/sources.list \
+    && echo 'deb http://ftp.cn.debian.org/debian-security/ jessie/updates main' >> /etc/apt/sources.list \
+    && echo 'deb-src http://ftp.cn.debian.org/debian/ jessie-updates main non-free contrib' >> /etc/apt/sources.list \
+    && echo 'deb-src http://ftp.cn.debian.org/debian-security/ jessie/updates main' >> /etc/apt/sources.list \
     && echo 'osc' > /etc/hostname \
     && echo '127.0.0.1 localhost' > /etc/hosts \
     && echo '127.0.1.1 osc' >> /etc/hosts \
@@ -28,15 +16,7 @@ RUN echo 'deb http://10.171.69.128/debian/ jessie main non-free contrib' > /etc/
     && echo '::1 localhost ip6-localhost ip6-loopback' >> /etc/hosts \
     && echo 'ff02::1 ip6-allnodes' >> /etc/hosts \
     && echo 'ff02::2 ip6-allrouters' >> /etc/hosts \
-    && dpkg --add-architecture armel \
-    && dpkg --add-architecture arm64 \
-    && dpkg --add-architecture powerpc \
     && apt-get update \
-    && apt-get install -y --force-yes --no-install-recommends wget \
-    && wget http://10.171.69.128/nass/osc.builder.pub.key \
-    && gpg --import osc.builder.pub.key \
-    && apt-key add osc.builder.pub.key \
-    && rm osc.builder.pub.key \
     && apt-get install -y --force-yes --no-install-recommends \
                manpages manpages-dev  bash-completion \
                perl perl-modules \
@@ -57,15 +37,6 @@ RUN echo 'deb http://10.171.69.128/debian/ jessie main non-free contrib' > /etc/
                qemu qemu-user-static kmod kernel-package \
                bridge-utils net-tools uml-utilities 
 
-#安装交叉编译环境
-RUN apt-get install -y --force-yes --no-install-recommends \
-            libcap-dev:armel libmount-dev:armel libdbus-1-dev:armel \
-            libgcc-4.9-dev:armel libgcc-4.9-dev:armel libstdc++-4.9-dev:armel \
-            libcap-dev:powerpc libmount-dev:powerpc \
-            libdbus-1-dev:powerpc libgcc-4.9-dev:powerpc libstdc++-4.9-dev:powerpc \
-            libcap-dev:arm64 libmount-dev:arm64 libdbus-1-dev:arm64 \
-            libgcc-4.9-dev:arm64 libgcc-4.9-dev:arm64 libstdc++-4.9-dev:arm64 \
-            crossbuild-essential-armel crossbuild-essential-arm64  crossbuild-essential-powerpc  
 
 #dash->bash
 RUN rm /bin/sh \
@@ -101,7 +72,7 @@ RUN apt-get -y --force-yes --no-install-recommends autoremove \
 #COPY image-armel /home/armel-qemu/image
 #COPY image-aarch64 /home/aarch64-qemu/image
 #COPY image-x86_64 /home/x86_64-qemu/image
-COPY hosts /etc/hosts
+#COPY hosts /etc/hosts
 USER osc-builder
 #CMD["source /home/osc-builder/.bashrc"]
 

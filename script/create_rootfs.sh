@@ -30,7 +30,7 @@ else
 fi
 SUITE=jessie
 TARGET=${DESTDIR}/${ARCH}-rootfs
-MIRROR=http://10.171.69.128/debian/
+MIRROR=http://ftp.cn.debian.org/debian/
 if [ -e /usr/bin/${QEMU_STATIC_BIN} ];then
     echo "find /usr/bin/${QEMU_STATIC_BIN} success"
 else
@@ -80,9 +80,11 @@ CHROOT="sudo DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true LC_
 LOCAL_CHROOT="${CHROOT} ${TARGET}"
     sudo debootstrap ${OPTION} ${SUITE} ${TARGET} ${MIRROR} \
     && sudo cp /usr/bin/${QEMU_STATIC_BIN} ${TARGET}/usr/bin/ \
-    && sudo cp /etc/apt/sources.list ${TARGET}/etc/apt/sources.list \
     && sudo DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true LC_ALL=C LANGUAGE=C LANG=C chroot ${TARGET}/ /debootstrap/debootstrap --second-stage \
-    && sudo cp ../docker/sources.list ${TARGET}/etc/apt/sources.list \
+    && ${LOCAL_CHROOT} sh -c 'echo "deb http://ftp.cn.debian.org/debian/ jessie main non-free contrib">/etc/apt/sources.list' \
+    && ${LOCAL_CHROOT} sh -c 'echo "deb http://ftp.cn.debian.org/debian/ jessie-updates main non-free contrib">>/etc/apt/sources.list' \
+    && ${LOCAL_CHROOT} sh -c 'echo "deb-src http://ftp.cn.debian.org/debian/ jessie main non-free contrib">>/etc/apt/sources.list' \
+    && ${LOCAL_CHROOT} sh -c 'echo "deb-src http://ftp.cn.debian.org/debian/ jessie-updates main non-free contrib">>/etc/apt/sources.list' \
     && ${LOCAL_CHROOT} apt-get update \
     && ${LOCAL_CHROOT} apt-get --force-yes -y purge libboost-iostreams1.55.0 cpio cron gcc-4.8-base libgdbm3 \
        groff-base libicu52 init-system-helpers libxtables10 iptables libjson-c2 \
@@ -119,10 +121,6 @@ LOCAL_CHROOT="${CHROOT} ${TARGET}"
     && ${LOCAL_CHROOT} sh -c 'hostname huawei' \
     && ${LOCAL_CHROOT} sh -c 'sed -ie "s/^trap - EXIT # Disable emergency handler$/\/etc\/init.d\/ssh restart \ntrap - EXIT # Disable emergency handler/" /etc/init.d/rc' \
     && ${LOCAL_CHROOT} sh -c 'sed -ie "s/^PermitRootLogin without-password$/PermitRootLogin yes/" /etc/ssh/sshd_config' \
-    && ${LOCAL_CHROOT} sh -c 'echo "deb http://ftp.cn.debian.org/debian/ jessie main non-free contrib">/etc/apt/sources.list' \
-    && ${LOCAL_CHROOT} sh -c 'echo "deb http://ftp.cn.debian.org/debian/ jessie-updates main non-free contrib">>/etc/apt/sources.list' \
-    && ${LOCAL_CHROOT} sh -c 'echo "deb-src http://ftp.cn.debian.org/debian/ jessie main non-free contrib">>/etc/apt/sources.list' \
-    && ${LOCAL_CHROOT} sh -c 'echo "deb-src http://ftp.cn.debian.org/debian/ jessie-updates main non-free contrib">>/etc/apt/sources.list' \
     && sudo rm ${TARGET}/usr/bin/${QEMU_STATIC_BIN} \
     && rm clean.sh changepasswd.sh inittab \
     && ROOTFS_NAME="${TARGET}-`date +'%Y-%m-%d-%H-%M'`".tar.gz \
