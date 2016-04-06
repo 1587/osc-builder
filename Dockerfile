@@ -94,13 +94,13 @@ RUN useradd -m  osc-builder \
 RUN apt-get -y --force-yes --no-install-recommends autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists
-ADD qemu.tar.gz /home
-COPY start_chroot.sh /bin/start-chroot
-COPY start_qemu.sh /bin/start-qemu
-COPY image-powerpc /home/powerpc-qemu/image
-COPY image-armel /home/armel-qemu/image
-COPY image-aarch64 /home/aarch64-qemu/image
-COPY image-x86_64 /home/x86_64-qemu/image
+#ADD qemu.tar.gz /home
+#COPY start_chroot.sh /bin/start-chroot
+#COPY start_qemu.sh /bin/start-qemu
+#COPY image-powerpc /home/powerpc-qemu/image
+#COPY image-armel /home/armel-qemu/image
+#COPY image-aarch64 /home/aarch64-qemu/image
+#COPY image-x86_64 /home/x86_64-qemu/image
 COPY hosts /etc/hosts
 USER osc-builder
 #CMD["source /home/osc-builder/.bashrc"]
