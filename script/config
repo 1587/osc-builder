@@ -1,0 +1,11 @@
+#lxc.console=none
+lxc.utsname = ar
+lxc.network.type = empty
+#lxc.network.type = veth
+#lxc.network.flags = up
+#lxc.network.link = br0
+#lxc.network.name = eth0
+lxc.mount = /home/phoenix/nos-creater/docker/powerpc-chroot/etc/fstab
+lxc.rootfs = /home/phoenix/nos-creater/docker/powerpc-chroot/
+lxc.pts = 9
+lxc.tty = 9

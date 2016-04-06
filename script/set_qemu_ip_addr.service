@@ -1,0 +1,8 @@
+[Unit]
+    Description=set_qemu_ip_addr
+    After=network.target
+[Service]
+    Type=simple
+    ExecStart=/bin/bash /etc/network/if-up.d/set_qemu_ip_addr.sh
+[Install]
+    WantedBy=multi-user.target
