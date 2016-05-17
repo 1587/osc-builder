@@ -57,7 +57,7 @@ RUN dpkg --add-architecture i386 \
     && apt-get install -y --force-yes --no-install-recommends libstdc++6:i386 lib32z1 lib32ncurses5 \
     && apt-get install -y --force-yes --no-install-recommends libc6-dev-i386 libc6-i386
 
-COPY hosts /etc/hosts
+#COPY hosts /etc/hosts
 
 #dash->bash
 RUN rm /bin/sh \
