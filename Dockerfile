@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:8.4
 ENV HOSTNAME osc
 RUN SOURCES_LIST=/etc/apt/sources.list \
     && echo "deb http://ftp.cn.debian.org/debian/ jessie main non-free contrib" > ${SOURCES_LIST} \
