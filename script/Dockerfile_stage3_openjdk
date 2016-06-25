@@ -1,0 +1,29 @@
+FROM 1587/osc-builder:stage2
+RUN apt-get update 
+    && apt-get install -y --no-install-recommends \
+       ca-certificates bzr mercurial procps \
+	  && apt-get -y --force-yes --no-install-recommends autoremove \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists
+ENV LANG C.UTF-8
+RUN { \
+    echo '#!/bin/sh'; \
+        echo 'set -e'; \
+        echo; \
+        echo 'dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"'; \
+ } > /usr/local/bin/docker-java-home \
+    && chmod +x /usr/local/bin/docker-java-home
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
+ENV JAVA_VERSION 8u91
+ENV JAVA_DEBIAN_VERSION 8u91-b14-1~bpo8+1
+ENV CA_CERTIFICATES_JAVA_VERSION 20140324
+RUN set -x \
+    && apt-get update \
+    && apt-get install -y \
+       openjdk-8-jdk="$JAVA_DEBIAN_VERSION" \
+       ca-certificates-java="$CA_CERTIFICATES_JAVA_VERSION" \
+    && apt-get -y --force-yes --no-install-recommends autoremove \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists \
+    && [ "$JAVA_HOME" = "$(docker-java-home)" ]
+RUN /var/lib/dpkg/info/ca-certificates-java.postinst configure
