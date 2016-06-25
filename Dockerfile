@@ -71,7 +71,61 @@ RUN apt-get install -y --force-yes --no-install-recommends \
 #    && apt-get install -y --force-yes --no-install-recommends libstdc++6:i386 lib32z1 lib32ncurses5 \
 #    && apt-get install -y --force-yes --no-install-recommends libc6-dev-i386 libc6-i386
 
-#COPY hosts /etc/hosts
+ RUN apt-get update && apt-get install -y --no-install-recommends \
+     ca-certificates \
+     bzr \
+     mercurial \
+     procps \
+     && apt-get clean \
+     && rm -rf /var/lib/apt/lists
+ ENV LANG C.UTF-8
+ RUN { \
+     echo '#!/bin/sh'; \
+         echo 'set -e'; \
+         echo; \
+         echo 'dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"'; \
+ } > /usr/local/bin/docker-java-home \
+     && chmod +x /usr/local/bin/docker-java-home
+ ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
+ ENV JAVA_VERSION 8u91
+ ENV JAVA_DEBIAN_VERSION 8u91-b14-1~bpo8+1
+ ENV CA_CERTIFICATES_JAVA_VERSION 20140324
+ RUN set -x \
+         && apt-get update \
+         && apt-get install -y \
+         openjdk-8-jdk="$JAVA_DEBIAN_VERSION" \
+         ca-certificates-java="$CA_CERTIFICATES_JAVA_VERSION" \
+         && rm -rf /var/lib/apt/lists/* \
+         && [ "$JAVA_HOME" = "$(docker-java-home)" ]
+ RUN /var/lib/dpkg/info/ca-certificates-java.postinst configure
+ENV JENKINS_HOME /var/jenkins_home
+ ENV JENKINS_SLAVE_AGENT_PORT 50000
+
+ ARG user=jenkins
+ ARG group=jenkins
+ ARG uid=1000
+ ARG gid=1000
+ RUN groupadd -g ${gid} ${group} \
+ && useradd -d "$JENKINS_HOME" -u ${uid} -g ${gid} -m -s /bin/bash ${user}
+ VOLUME /var/jenkins_home
+ RUN mkdir -p /usr/share/jenkins/ref/init.groovy.d
+ ENV TINI_SHA 066ad710107dc7ee05d3aa6e4974f01dc98f3888
+ RUN curl -fsSL https://github.com/krallin/tini/releases/download/v0.5.0/tini-static -o /bin/tini && chmod +x /bin/tini \
+   && echo "$TINI_SHA  /bin/tini" | sha1sum -c -
+ COPY init.groovy /usr/share/jenkins/ref/init.groovy.d/tcp-slave-agent-port.groovy
+ ARG JENKINS_VERSION
+ ENV JENKINS_VERSION ${JENKINS_VERSION:-1.651.3}
+ ARG JENKINS_SHA
+ ENV JENKINS_SHA ${JENKINS_SHA:-564e49fbd180d077a22a8c7bb5b8d4d58d2a18ce}
+ RUN curl -fsSL http://repo.jenkins-ci.org/public/org/jenkins-ci/main/jenkins-war/${JENKINS_VERSION}/jenkins-war-${JENKINS_VERSION}.    war -o /usr/share/jenkins/jenkins.war \
+ && echo "$JENKINS_SHA  /usr/share/jenkins/jenkins.war" | sha1sum -c -
+ ENV JENKINS_UC https://updates.jenkins.io
+ RUN chown -R ${user} "$JENKINS_HOME" /usr/share/jenkins/ref
+ EXPOSE 8080
+ EXPOSE 50000
+ ENV COPY_REFERENCE_FILE_LOG $JENKINS_HOME/copy_reference_file.log
+
+ USER ${user}
 
 #dash->bash
 RUN rm /bin/sh \
