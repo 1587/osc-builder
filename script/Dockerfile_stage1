@@ -57,7 +57,7 @@ RUN apt-get update \
     && echo 'Y' >> /tmp/install_sudo.sh \
     && echo 'EOF' >> /tmp/install_sudo.sh \
     && chmod 777 /tmp/install_sudo.sh \
-    && source /tmp/install_sudo.sh \
+    && /bin/bash /tmp/install_sudo.sh \
     && rm /tmp/install_sudo.sh \
     && apt-get -y --force-yes --no-install-recommends autoremove \
     && apt-get clean \
@@ -75,7 +75,7 @@ RUN useradd --shell /bin/bash -m  osc-builder \
     && echo 'root' >> /tmp/adduser_osc-builder.sh \
     && echo 'EOF2' >> /tmp/adduser_osc-builder.sh \
     && chmod 777 /tmp/adduser_osc-builder.sh \
-    && source /tmp/adduser_osc-builder.sh \
+    && /bin/bash /tmp/adduser_osc-builder.sh \
     && rm /tmp/adduser_osc-builder.sh
 
 RUN rm /bin/sh \
