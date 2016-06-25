@@ -125,7 +125,7 @@ ENV JENKINS_HOME /var/jenkins_home
  EXPOSE 50000
  ENV COPY_REFERENCE_FILE_LOG $JENKINS_HOME/copy_reference_file.log
 
- USER ${user}
+ #USER ${user}
 
 #dash->bash
 RUN rm /bin/sh \
