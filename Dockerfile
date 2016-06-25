@@ -19,9 +19,7 @@ RUN SOURCES_LIST=/etc/apt/sources.list \
     && echo 'ff02::1 ip6-allnodes' >> /etc/hosts \
     && echo 'ff02::2 ip6-allrouters' >> /etc/hosts \
     && dpkg --add-architecture armel \
-    && dpkg --add-architecture armhf \
     && dpkg --add-architecture arm64 \
-    && dpkg --add-architecture mips \
     && dpkg --add-architecture powerpc \
     && apt-get update \
     && apt-get install -y --force-yes --no-install-recommends wget \
