@@ -52,17 +52,17 @@ RUN SOURCES_LIST=/etc/apt/sources.list \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists
 
-##安装交叉编译环境
-#RUN apt-get install -y --force-yes --no-install-recommends \
-#            linux-libc-dev:armel libc6-dev:armel libcap-dev:armel libmount-dev:armel libdbus-1-dev:armel \
-#            libgcc-4.9-dev:armel libgcc-4.9-dev:armel libstdc++-4.9-dev:armel \
-#            linux-libc-dev:powerpc libc6-dev:powerpc libcap-dev:powerpc libmount-dev:powerpc \
-#            libdbus-1-dev:powerpc libgcc-4.9-dev:powerpc libstdc++-4.9-dev:powerpc \
-#            linux-libc-dev:arm64 libc6-dev:arm64 libcap-dev:arm64 libmount-dev:arm64 libdbus-1-dev:arm64 \
-#            libgcc-4.9-dev:arm64 libgcc-4.9-dev:arm64 libstdc++-4.9-dev:arm64 \
-#            crossbuild-essential-armel crossbuild-essential-arm64  crossbuild-essential-powerpc
-#
-#
+#安装交叉编译环境
+RUN apt-get install -y --force-yes --no-install-recommends \
+            linux-libc-dev:armel libc6-dev:armel libcap-dev:armel libmount-dev:armel libdbus-1-dev:armel \
+            libgcc-4.9-dev:armel libgcc-4.9-dev:armel libstdc++-4.9-dev:armel \
+            linux-libc-dev:powerpc libc6-dev:powerpc libcap-dev:powerpc libmount-dev:powerpc \
+            libdbus-1-dev:powerpc libgcc-4.9-dev:powerpc libstdc++-4.9-dev:powerpc \
+            linux-libc-dev:arm64 libc6-dev:arm64 libcap-dev:arm64 libmount-dev:arm64 libdbus-1-dev:arm64 \
+            libgcc-4.9-dev:arm64 libgcc-4.9-dev:arm64 libstdc++-4.9-dev:arm64 \
+            crossbuild-essential-armel crossbuild-essential-arm64  crossbuild-essential-powerpc
+
+
 ##安装32位库
 #RUN dpkg --add-architecture i386 \
 #    && apt-get update \
