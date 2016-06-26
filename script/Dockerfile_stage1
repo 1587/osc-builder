@@ -5,8 +5,6 @@ RUN SOURCES_LIST=/etc/apt/sources.list \
     && echo "deb http://ftp.cn.debian.org/debian/ jessie-updates main non-free contrib" >> ${SOURCES_LIST} \
     && echo "deb-src http://ftp.cn.debian.org/debian/ jessie main non-free contrib" >> ${SOURCES_LIST} \
     && echo "deb-src http://ftp.cn.debian.org/debian/ jessie-updates main non-free contrib" >> ${SOURCES_LIST} \
-    && echo "deb-src http://ftp.cn.debian.org/debian/ jessie-backports main non-free contrib" >> ${SOURCES_LIST} \
-    && echo "deb-src http://ftp.cn.debian.org/debian/ jessie-backports main non-free contrib" >> ${SOURCES_LIST} \
     && echo "deb http://ftp.cn.debian.org/debian-security/ jessie/updates main non-free contrib" >> ${SOURCES_LIST} \
     && echo "deb-src http://ftp.cn.debian.org/debian-security/ jessie/updates main non-free contrib" >> ${SOURCES_LIST} \
     && echo "deb http://emdebian.org/tools/debian jessie main extra" >> ${SOURCES_LIST} \
