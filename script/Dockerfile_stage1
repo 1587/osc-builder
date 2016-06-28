@@ -46,6 +46,7 @@ RUN SOURCES_LIST=/etc/apt/sources.list \
                rpm pkg-config make autoconf automake pkgconf libtool \
                intltool autotools-dev dpkg-dev patchutils alien bison flex libbison-dev \
                libfl-dev libintl-perl libtext-unidecode-perl texinfo zip unzip \
+               dh-exec dpatch dh-buildinfo gtk-doc-tools dh-autoreconf cdbs gnome-pkg-tools \
     && apt-get -y --force-yes --no-install-recommends autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists
