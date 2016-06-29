@@ -3,16 +3,19 @@ RUN set -x  \
     && LANG=C.UTF-8 \
     && JAVA_DEBIAN_VERSION=8u91-b14-1~bpo8+1 \
     && CA_CERTIFICATES_JAVA_VERSION=20140324 \
+    && echo "CA_CERTIFICATES_JAVA_VERSION=${CA_CERTIFICATES_JAVA_VERSION}" >> /etc/profile \
+    && echo "JAVA_DEBIAN_VERSION=${JAVA_DEBIAN_VERSION}" >> /etc/profile \
+    && echo "LANG=${LANG}" >> /etc/profile \
     && BACKPORTS_SOURCE_LIST=/etc/apt/sources.list.d/jessie-backports.list \
     && echo "deb http://ftp.cn.debian.org/debian/ jessie-backports main non-free contrib" >> ${BACKPORTS_SOURCE_LIST} \
     && echo "deb-src http://ftp.cn.debian.org/debian/ jessie-backports main non-free contrib" >> ${BACKPORTS_SOURCE_LIST} \
     && apt-get update \
     && apt-get install -y \
-        ca-certificates bzr mercurial procps \
+       ca-certificates bzr mercurial procps \
        openjdk-8-jdk="$JAVA_DEBIAN_VERSION" \
        ca-certificates-java="$CA_CERTIFICATES_JAVA_VERSION" \
     && apt-get -y --force-yes --no-install-recommends autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists \
-    && rm ${BACKPORTS_SOURCE_LIST} 
-RUN /var/lib/dpkg/info/ca-certificates-java.postinst configure
+    && rm ${BACKPORTS_SOURCE_LIST} \
+    && /var/lib/dpkg/info/ca-certificates-java.postinst configure
