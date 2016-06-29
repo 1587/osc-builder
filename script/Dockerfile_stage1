@@ -56,7 +56,7 @@ RUN apt-get update \
 RUN echo '#!/bin/sh' > /tmp/adduser_osc-builder.sh \
     && echo "echo 'osc ALL=(ALL:ALL) ALL' >> /etc/sudoers" >>  /tmp/adduser_osc-builder.sh \
     && echo 'groupadd -g $1 osc' >> /tmp/adduser_osc-builder.sh \
-    && echo 'useradd -u $1 -g $2 -m -s /bin/bash osc' >>　/tmp/adduser_osc-builder.sh \
+    && echo 'useradd -u $1 -g $2 -m -s /bin/bash osc' >> /tmp/adduser_osc-builder.sh \
     && echo 'passwd osc <<EOF' >> /tmp/adduser_osc-builder.sh \
     && echo 'osc' >> /tmp/adduser_osc-builder.sh \
     && echo 'osc' >> /tmp/adduser_osc-builder.sh \
