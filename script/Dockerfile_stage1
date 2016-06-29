@@ -1,12 +1,12 @@
 FROM debian:8.4
 ENV HOSTNAME osc
 RUN SOURCES_LIST=/etc/apt/sources.list \
-    && echo "deb http://ftp.cn.debian.org/debian/ jessie main non-free contrib" > ${SOURCES_LIST} \
-    && echo "deb http://ftp.cn.debian.org/debian/ jessie-updates main non-free contrib" >> ${SOURCES_LIST} \
-    && echo "deb-src http://ftp.cn.debian.org/debian/ jessie main non-free contrib" >> ${SOURCES_LIST} \
-    && echo "deb-src http://ftp.cn.debian.org/debian/ jessie-updates main non-free contrib" >> ${SOURCES_LIST} \
-    && echo "deb http://ftp.cn.debian.org/debian-security/ jessie/updates main non-free contrib" >> ${SOURCES_LIST} \
-    && echo "deb-src http://ftp.cn.debian.org/debian-security/ jessie/updates main non-free contrib" >> ${SOURCES_LIST} \
+    && echo "deb http://ftp.us.debian.org/debian/ jessie main non-free contrib" > ${SOURCES_LIST} \
+    && echo "deb http://ftp.us.debian.org/debian/ jessie-updates main non-free contrib" >> ${SOURCES_LIST} \
+    && echo "deb-src http://ftp.us.debian.org/debian/ jessie main non-free contrib" >> ${SOURCES_LIST} \
+    && echo "deb-src http://ftp.us.debian.org/debian/ jessie-updates main non-free contrib" >> ${SOURCES_LIST} \
+    && echo "deb http://ftp.us.debian.org/debian-security/ jessie/updates main non-free contrib" >> ${SOURCES_LIST} \
+    && echo "deb-src http://ftp.us.debian.org/debian-security/ jessie/updates main non-free contrib" >> ${SOURCES_LIST} \
     && echo 'osc' > /etc/hostname \
     && echo '127.0.0.1 localhost' > /etc/hosts \
     && echo '127.0.1.1 osc' >> /etc/hosts \
@@ -36,10 +36,11 @@ RUN SOURCES_LIST=/etc/apt/sources.list \
                rpm pkg-config make autoconf automake pkgconf libtool \
                intltool autotools-dev dpkg-dev patchutils alien bison flex libbison-dev \
                libfl-dev libintl-perl libtext-unidecode-perl texinfo zip unzip \
-               dh-exec dpatch dh-buildinfo gtk-doc-tools dh-autoreconf cdbs gnome-pkg-tools \
+
     && apt-get -y --force-yes --no-install-recommends autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists
+               #dh-exec dpatch dh-buildinfo gtk-doc-tools dh-autoreconf cdbs gnome-pkg-tools 
 RUN apt-get update \
     && echo '#!/bin/bash' > /tmp/install_sudo.sh \
     && echo 'apt-get install -y --no-install-recommends sudo <<EOF' >> /tmp/install_sudo.sh \
@@ -52,19 +53,19 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists
 
-RUN echo '#!/bin/sh' > /tmp/adduser_osc-builder.sh \
-    && echo "echo 'osc ALL=(ALL:ALL) ALL' >> /etc/sudoers" >>  /tmp/adduser_osc-builder.sh \
-    && echo 'groupadd -g $1 osc' >> /tmp/adduser_osc-builder.sh \
-    && echo 'useradd -u $1 -g $2 -m -s /bin/bash osc' >>　/tmp/adduser_osc-builder.sh \
-    && echo 'passwd osc <<EOF' >> /tmp/adduser_osc-builder.sh \
-    && echo 'osc' >> /tmp/adduser_osc-builder.sh \
-    && echo 'osc' >> /tmp/adduser_osc-builder.sh \
-    && echo 'EOF' >> /tmp/adduser_osc-builder.sh \
-    && echo 'passwd root <<EOF2' >> /tmp/adduser_osc-builder.sh \
-    && echo 'root' >> /tmp/adduser_osc-builder.sh \
-    && echo 'root' >> /tmp/adduser_osc-builder.sh \
-    && echo 'EOF2' >> /tmp/adduser_osc-builder.sh \
-    && chmod 777 /tmp/adduser_osc-builder.sh
+#RUN echo '#!/bin/sh' > /tmp/adduser_osc-builder.sh \
+#    && echo "echo 'osc ALL=(ALL:ALL) ALL' >> /etc/sudoers" >>  /tmp/adduser_osc-builder.sh \
+#    && echo 'groupadd -g $1 osc' >> /tmp/adduser_osc-builder.sh \
+#    && echo 'useradd -u $1 -g $2 -m -s /bin/bash osc' >>　/tmp/adduser_osc-builder.sh \
+#    && echo 'passwd osc <<EOF' >> /tmp/adduser_osc-builder.sh \
+#    && echo 'osc' >> /tmp/adduser_osc-builder.sh \
+#    && echo 'osc' >> /tmp/adduser_osc-builder.sh \
+#    && echo 'EOF' >> /tmp/adduser_osc-builder.sh \
+#    && echo 'passwd root <<EOF2' >> /tmp/adduser_osc-builder.sh \
+#    && echo 'root' >> /tmp/adduser_osc-builder.sh \
+#    && echo 'root' >> /tmp/adduser_osc-builder.sh \
+#    && echo 'EOF2' >> /tmp/adduser_osc-builder.sh \
+#    && chmod 777 /tmp/adduser_osc-builder.sh
 
 RUN rm /bin/sh \
     && ln -s /bin/bash /bin/sh \
