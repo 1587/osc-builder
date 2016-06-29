@@ -1,6 +1,7 @@
 FROM 1587/osc-builder:stage1
 #安装交叉编译环境
-RUN dpkg --add-architecture armel \
+RUN SOURCES_LIST=/etc/apt/sources.list \
+    && dpkg --add-architecture armel \
     && dpkg --add-architecture arm64 \
     && dpkg --add-architecture powerpc \
     && wget http://emdebian.org/tools/debian/emdebian-toolchain-archive.key \
