@@ -69,7 +69,5 @@ RUN apt-get update \
 
 RUN rm /bin/sh \
     && ln -s /bin/bash /bin/sh \
-    && mkdir /usr/src/packages \
-    && chown -R osc-builder:osc-builder /usr/src/packages \
     && sh -c 'sed -ie "s/^UsePAM yes/UsePAM no/" /etc/ssh/sshd_config'
 MAINTAINER ZhuJiafa, zjfscu@gmail.com
