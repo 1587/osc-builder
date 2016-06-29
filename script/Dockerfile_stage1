@@ -7,8 +7,6 @@ RUN SOURCES_LIST=/etc/apt/sources.list \
     && echo "deb-src http://ftp.cn.debian.org/debian/ jessie-updates main non-free contrib" >> ${SOURCES_LIST} \
     && echo "deb http://ftp.cn.debian.org/debian-security/ jessie/updates main non-free contrib" >> ${SOURCES_LIST} \
     && echo "deb-src http://ftp.cn.debian.org/debian-security/ jessie/updates main non-free contrib" >> ${SOURCES_LIST} \
-    && echo "deb http://emdebian.org/tools/debian jessie main extra" >> ${SOURCES_LIST} \
-    && echo "deb-src http://emdebian.org/tools/debian jessie main extra" >> ${SOURCES_LIST} \
     && echo 'osc' > /etc/hostname \
     && echo '127.0.0.1 localhost' > /etc/hosts \
     && echo '127.0.1.1 osc' >> /etc/hosts \
@@ -16,15 +14,7 @@ RUN SOURCES_LIST=/etc/apt/sources.list \
     && echo '::1 localhost ip6-localhost ip6-loopback' >> /etc/hosts \
     && echo 'ff02::1 ip6-allnodes' >> /etc/hosts \
     && echo 'ff02::2 ip6-allrouters' >> /etc/hosts \
-    && dpkg --add-architecture armel \
-    && dpkg --add-architecture arm64 \
-    && dpkg --add-architecture powerpc \
     && apt-get update \
-    && apt-get install -y --force-yes --no-install-recommends wget \
-    && wget http://emdebian.org/tools/debian/emdebian-toolchain-archive.key \
-    && gpg --import /emdebian-toolchain-archive.key \
-    && apt-key add /emdebian-toolchain-archive.key \
-    && rm /emdebian-toolchain-archive.key \
     && apt-get install -y --force-yes --no-install-recommends\
                manpages manpages-dev  bash-completion  apt-utils\
                perl perl-modules \
@@ -78,7 +68,7 @@ RUN echo '#!/bin/sh' > /tmp/adduser_osc-builder.sh \
 
 RUN rm /bin/sh \
     && ln -s /bin/bash /bin/sh \
-	  && mkdir /usr/src/packages \
+    && mkdir /usr/src/packages \
     && chown -R osc-builder:osc-builder /usr/src/packages \
-	  && sh -c 'sed -ie "s/^UsePAM yes/UsePAM no/" /etc/ssh/sshd_config'
+    && sh -c 'sed -ie "s/^UsePAM yes/UsePAM no/" /etc/ssh/sshd_config'
 MAINTAINER ZhuJiafa, zjfscu@gmail.com
