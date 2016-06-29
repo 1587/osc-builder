@@ -1,6 +1,15 @@
 FROM 1587/osc-builder:stage1
 #安装交叉编译环境
-RUN apt-get update \
+RUN dpkg --add-architecture armel \
+    && dpkg --add-architecture arm64 \
+    && dpkg --add-architecture powerpc \
+    && wget http://emdebian.org/tools/debian/emdebian-toolchain-archive.key \
+    && gpg --import /emdebian-toolchain-archive.key \
+    && apt-key add /emdebian-toolchain-archive.key \
+    && rm /emdebian-toolchain-archive.key \
+    && echo "deb http://emdebian.org/tools/debian jessie main extra" >> ${SOURCES_LIST} \
+    && echo "deb-src http://emdebian.org/tools/debian jessie main extra" >> ${SOURCES_LIST} \
+    && apt-get update \
     && apt-get install -y --force-yes --no-install-recommends \
             linux-libc-dev:armel libc6-dev:armel libcap-dev:armel libmount-dev:armel libdbus-1-dev:armel \
             libgcc-4.9-dev:armel libgcc-4.9-dev:armel libstdc++-4.9-dev:armel \
