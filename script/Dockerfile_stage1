@@ -38,7 +38,7 @@ RUN echo "HOSTNAME=${HOSTNAME}" > /etc/profile \
                bridge-utils net-tools uml-utilities openssh-server libc-dev linux-libc-dev \
                rpm pkg-config make autoconf automake pkgconf libtool \
                intltool autotools-dev dpkg-dev patchutils alien bison flex libbison-dev \
-               libfl-dev libintl-perl libtext-unidecode-perl texinfo zip unzip \
+               libfl-dev libintl-perl libtext-unidecode-perl texinfo zip unzip docker.io\
 
     && apt-get -y --force-yes --no-install-recommends autoremove \
     && apt-get clean \
