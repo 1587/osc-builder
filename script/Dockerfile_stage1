@@ -8,8 +8,8 @@ RUN echo "HOSTNAME=${HOSTNAME}" > /etc/profile \
     && echo "deb-src http://ftp.cn.debian.org/debian/ jessie-updates main non-free contrib" >> ${SOURCES_LIST} \
     && echo "deb http://ftp.cn.debian.org/debian-security/ jessie/updates main non-free contrib" >> ${SOURCES_LIST} \
     && echo "deb-src http://ftp.cn.debian.org/debian-security/ jessie/updates main non-free contrib" >> ${SOURCES_LIST} \
-    && echo "deb http://ftp.cn.debian.org/debian/ jessie-backports/ main non-free contrib" >> ${SOURCES_LIST} \
-    && echo "deb-src http://ftp.cn.debian.org/debian/ jessie-backports/ main non-free contrib" >> ${SOURCES_LIST} \
+    && echo "deb http://ftp.cn.debian.org/debian/ jessie-backports main non-free contrib" >> ${SOURCES_LIST} \
+    && echo "deb-src http://ftp.cn.debian.org/debian/ jessie-backports main non-free contrib" >> ${SOURCES_LIST} \
     && echo 'osc' > /etc/hostname \
     && echo '127.0.0.1 localhost' > /etc/hosts \
     && echo '127.0.1.1 osc' >> /etc/hosts \
