@@ -81,6 +81,7 @@ LOCAL_CHROOT="${CHROOT} ${TARGET}"
     sudo debootstrap ${OPTION} ${SUITE} ${TARGET} ${MIRROR} \
     && sudo cp /usr/bin/${QEMU_STATIC_BIN} ${TARGET}/usr/bin/ \
     && sudo DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true LC_ALL=C LANGUAGE=C LANG=C chroot ${TARGET}/ /debootstrap/debootstrap --second-stage \
+    && ${LOCAL_CHROOT} sh -c 'echo "debconf debconf/frontend select Noninteractive" | debconf-set-selections' \
     && ${LOCAL_CHROOT} sh -c 'echo "deb http://ftp.cn.debian.org/debian/ jessie main non-free contrib">/etc/apt/sources.list' \
     && ${LOCAL_CHROOT} sh -c 'echo "deb http://ftp.cn.debian.org/debian/ jessie-updates main non-free contrib">>/etc/apt/sources.list' \
     && ${LOCAL_CHROOT} sh -c 'echo "deb-src http://ftp.cn.debian.org/debian/ jessie main non-free contrib">>/etc/apt/sources.list' \
