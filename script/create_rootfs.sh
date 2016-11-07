@@ -6,6 +6,7 @@ if [ "$1" == "powerpc" ]; then
     QEMU_STATIC_BIN=qemu-ppc-static
     LIB_ARCH=powerpc-linux-gnu
     OPTION="--foreign --arch ${ARCH}"
+    PPC_DEB=" librtas1 librtasevent1 mac-fdisk powerpc-ibm-utils powerpc-utils yaboot "
 elif [ "$1" == "armel" ]; then
     ARCH=armel
     QEMU_STATIC_BIN=qemu-arm-static
@@ -93,7 +94,7 @@ LOCAL_CHROOT="${CHROOT} ${TARGET}"
        libnfnetlink0 libpipeline1 libpsl0 libsigc++-2.0-0c2a libtext-charwidth-perl \
        libtext-iconv-perl libtext-wrapi18n-perl logrotate man-db manpages nano \
        netcat-traditional libnewt0.52 nfacct libssl1.0.0 libpopt0 tasksel-data tasksel wget \
-       librtas1 librtasevent1 mac-fdisk powerpc-ibm-utils powerpc-utils yaboot debconf-i18n \
+       debconf-i18n ${PPC_DEB} \
     && ${LOCAL_CHROOT} apt-get install --force-yes -y --no-install-recommends openssh-server ftp telnet \
        tree openssl ntp  binutils gcc  sudo psmisc \
     && ${LOCAL_CHROOT} apt-get download busybox \
