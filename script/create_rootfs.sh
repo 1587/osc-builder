@@ -95,8 +95,7 @@ LOCAL_CHROOT="${CHROOT} ${TARGET}"
        libtext-iconv-perl libtext-wrapi18n-perl logrotate man-db manpages nano \
        netcat-traditional libnewt0.52 nfacct libssl1.0.0 libpopt0 tasksel-data tasksel wget \
        debconf-i18n ${PPC_DEB} \
-    && ${LOCAL_CHROOT} apt-get install --force-yes -y --no-install-recommends openssh-server ftp telnet \
-       tree openssl ntp  binutils gcc  sudo psmisc \
+    && ${LOCAL_CHROOT} apt-get install --force-yes -y --no-install-recommends openssh-server \
     && ${LOCAL_CHROOT} apt-get download busybox \
     && ${LOCAL_CHROOT} sh -c 'dpkg -X busybox*.deb /busybox' \
     && ${LOCAL_CHROOT} sh -c 'rm -f busybox*.deb' \
