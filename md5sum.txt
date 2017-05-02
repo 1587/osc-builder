@@ -1,0 +1,5 @@
+md5sum debian-8.7.tar.xz
+4d53aefdce5ce159e4dec2547b068253  debian-8.7.tar.xz
+xz -d debian-8.7.tar.xz
+md5sum debian-8.7.tar
+123a4a46d40fc6a7a6bd6fb5d0e294b9  debian-8.7.tar
