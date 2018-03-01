@@ -1,4 +1,4 @@
-FROM debian:8.4
+FROM debian:jessie
 ENV HOSTNAME osc
 RUN echo "HOSTNAME=${HOSTNAME}" > /etc/profile \
     && SOURCES_LIST=/etc/apt/sources.list \
