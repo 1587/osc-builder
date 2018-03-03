@@ -8,8 +8,6 @@ RUN echo "HOSTNAME=${HOSTNAME}" > /etc/profile \
     && echo "deb-src http://ftp.cn.debian.org/debian/ jessie-updates main non-free contrib" >> ${SOURCES_LIST} \
     && echo "deb http://ftp.cn.debian.org/debian-security/ jessie/updates main non-free contrib" >> ${SOURCES_LIST} \
     && echo "deb-src http://ftp.cn.debian.org/debian-security/ jessie/updates main non-free contrib" >> ${SOURCES_LIST} \
-    && echo "deb http://ftp.cn.debian.org/debian/ jessie-backports main non-free contrib" >> ${SOURCES_LIST} \
-    && echo "deb-src http://ftp.cn.debian.org/debian/ jessie-backports main non-free contrib" >> ${SOURCES_LIST} \
     && echo 'osc' > /etc/hostname \
     && echo '127.0.0.1 localhost' > /etc/hosts \
     && echo '127.0.1.1 osc' >> /etc/hosts \
@@ -18,8 +16,8 @@ RUN echo "HOSTNAME=${HOSTNAME}" > /etc/profile \
     && echo 'ff02::1 ip6-allnodes' >> /etc/hosts \
     && echo 'ff02::2 ip6-allrouters' >> /etc/hosts \
     && apt-get update \
-    && apt-get install -y --force-yes --no-install-recommends\
-               manpages manpages-dev  bash-completion  apt-utils\
+    && apt-get install -y --force-yes --no-install-recommends \
+               manpages manpages-dev  bash-completion  apt-utils \
                perl perl-modules \
                libtimedate-perl libdpkg-perl \
                gcc g++ \
@@ -38,12 +36,11 @@ RUN echo "HOSTNAME=${HOSTNAME}" > /etc/profile \
                bridge-utils net-tools uml-utilities openssh-server libc-dev linux-libc-dev \
                rpm pkg-config make autoconf automake pkgconf libtool \
                intltool autotools-dev dpkg-dev patchutils alien bison flex libbison-dev \
-               libfl-dev libintl-perl libtext-unidecode-perl texinfo zip unzip docker.io\
-
+               libfl-dev libintl-perl libtext-unidecode-perl texinfo zip unzip docker.io \
     && apt-get -y --force-yes --no-install-recommends autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists
-               #dh-exec dpatch dh-buildinfo gtk-doc-tools dh-autoreconf cdbs gnome-pkg-tools 
+
 RUN apt-get update \
     && echo '#!/bin/bash' > /tmp/install_sudo.sh \
     && echo 'apt-get install -y --no-install-recommends sudo <<EOF' >> /tmp/install_sudo.sh \
