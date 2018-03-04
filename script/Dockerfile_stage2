@@ -11,7 +11,10 @@ RUN SOURCES_LIST=/etc/apt/sources.list \
     && echo "deb-src http://emdebian.org/tools/debian jessie main extra" >> ${SOURCES_LIST} \
     && apt-get update \
     && apt-get install -y --force-yes --no-install-recommends \
-            g++-4.9-aarch64-linux-gnu gcc-4.9-aarch64-linux-gnu libstdc++-4.9-dev:arm64=4.9.2-10
+            g++-4.9-aarch64-linux-gnu=4.9.2-10 gcc-4.9-aarch64-linux-gnu=4.9.2-10 libstdc++-4.9-dev:arm64=4.9.2-10 \
+            libgcc-4.9-dev:arm64=4.9.2-10 gcc-4.9-base:arm64=4.9.2-10 libgcc-4.9-dev:arm64=4.9.2-10 \
+            g++-4.9-armel-linux-gnu=4.9.2-10 gcc-4.9-armel-linux-gnu=4.9.2-10 libstdc++-4.9-dev:armel=4.9.2-10 \
+            libgcc-4.9-dev:armel=4.9.2-10 gcc-4.9-base:armel=4.9.2-10 libgcc-4.9-dev:armel=4.9.2-10
     RUN apt-get install -y --force-yes --no-install-recommends \
             linux-libc-dev:armel libc6-dev:armel libcap-dev:armel libmount-dev:armel libdbus-1-dev:armel \
             libgcc-4.9-dev:armel libgcc-4.9-dev:armel libstdc++-4.9-dev:armel \
