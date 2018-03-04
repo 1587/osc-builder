@@ -15,6 +15,7 @@ RUN SOURCES_LIST=/etc/apt/sources.list \
             libgcc-4.9-dev:armel libgcc-4.9-dev:armel libstdc++-4.9-dev:armel \
             linux-libc-dev:arm64 libc6-dev:arm64 libcap-dev:arm64 libmount-dev:arm64 libdbus-1-dev:arm64 \
             libgcc-4.9-dev:arm64 libgcc-4.9-dev:arm64 libstdc++-4.9-dev:arm64 \
+            gcc-aarch64-linux-gnu g++-aarch64-linux-gnu gcc-arm-linux-gnueabi g++-arm-linux-gnueabi \
             crossbuild-essential-armel crossbuild-essential-arm64  \
     && apt-get -y --force-yes --no-install-recommends autoremove \
     && apt-get clean \
